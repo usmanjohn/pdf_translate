@@ -52,7 +52,7 @@ def refine_text_with_openai(text):
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=[
-            {"role": "system", "content": "You are a professional proofreader. Do not change the meaning or sentence, but correct if spelling or writing errors"},
+            {"role": "system", "content": "You are a professional proofreader. Modify if spelling error"},
             {"role": "user", "content": prompt}
         ],
         max_tokens=1000
