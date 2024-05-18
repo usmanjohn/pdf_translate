@@ -46,19 +46,6 @@ def correct_text(text):
     corrected_text = spell(text)
     return corrected_text
 
-# Function to further correct text using OpenAI
-def refine_text_with_openai(text):
-    prompt = f"Please check and correct any errors in the following text:\n\n{text}"
-    response = openai.chat.completions.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "system", "content": "You are a professional proofreader. Modify if spelling error"},
-            {"role": "user", "content": prompt}
-        ],
-        max_tokens=1000
-    )
-    refined_text = response.choices[0].message.content.strip()
-    return refined_text
 
 # Streamlit interface
 st.title("Document Translator")
@@ -76,10 +63,10 @@ if uploaded_file is not None:
     corrected_text = correct_text(extracted_text)
     
     st.write("Refining text with OpenAI...")
-    refined_text = refine_text_with_openai(corrected_text)
+   
     
     doc = Document()
-    doc.add_paragraph(refined_text)
+    doc.add_paragraph(corrected_text)
     
     target_language = st.selectbox("Select target language", [("Korean", "ko"), ("English", "eng")], format_func=lambda x: x[0])
     
