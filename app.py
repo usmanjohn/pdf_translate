@@ -49,7 +49,7 @@ def correct_text(text):
 # Function to further correct text using OpenAI
 def refine_text_with_openai(text):
     prompt = f"Please check and correct any errors in the following text:\n\n{text}"
-    response = openai.ChatCompletion.create(
+    response = openai.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": "You are a professional proofreader. Modify if spelling error"},
