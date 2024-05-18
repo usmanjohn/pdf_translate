@@ -47,6 +47,12 @@ def correct_text(text):
     return corrected_text
 
 
+import re
+
+def preprocess_text(text):
+    # Remove control characters and NULL bytes
+    text = re.sub(r'[\x00-\x1F\x7F-\x9F]', '', text)
+    return text
 # Streamlit interface
 st.title("Document Translator")
 
@@ -58,9 +64,13 @@ if uploaded_file is not None:
     
     st.write("Converting PDF to text...")
     extracted_text = ocr_pdf_to_text("temp.pdf")
+
+    st.write("Cleaning text...")
+    cleaned_text = preprocess_text("temp.pdf")
+
     
     st.write("Correcting text errors...")
-    corrected_text = correct_text(extracted_text)
+    corrected_text = correct_text(cleaned_text)
     
     st.write("Refining text with OpenAI...")
    
